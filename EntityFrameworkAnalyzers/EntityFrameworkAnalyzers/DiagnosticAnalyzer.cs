@@ -53,16 +53,14 @@ namespace EntityFrameworkAnalyzers
 				return;
 			}
 
-			var parameters = memberSymbol.Parameters;
+			var argumentList = invocationExpr.ArgumentList;
 
-			if (parameters == null || parameters.Length == 0)
+			if (argumentList == null || argumentList.Arguments.Count == 0)
 			{
 				return;
 			}
 
-			var parameterTypeName = parameters[0].Type.ContainingNamespace.Name + "." + parameters[0].Type.Name;
-
-			if (parameterTypeName == typeof(string).FullName)
+			if (argumentList.Arguments[0].Expression.IsKind(SyntaxKind.StringLiteralExpression))
 			{
 				var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetLocation());
 				context.ReportDiagnostic(diagnostic);
