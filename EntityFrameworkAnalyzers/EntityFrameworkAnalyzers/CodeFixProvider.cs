@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
+﻿using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
+using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Rename;
-using Microsoft.CodeAnalysis.Text;
+using Microsoft.CodeAnalysis.Formatting;
 
 namespace EntityFrameworkAnalyzers
 {
@@ -32,36 +29,33 @@ namespace EntityFrameworkAnalyzers
 		{
 			var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
 
-			// TODO: Replace the following code with your own analysis, generating a CodeAction for each fix to suggest
 			var diagnostic = context.Diagnostics.First();
 			var diagnosticSpan = diagnostic.Location.SourceSpan;
 
 			// Find the type declaration identified by the diagnostic.
-			var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<TypeDeclarationSyntax>().First();
-
+			var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>().First();
+			
 			// Register a code action that will invoke the fix.
-			context.RegisterCodeFix(
-				CodeAction.Create("Make uppercase", c => MakeUppercaseAsync(context.Document, declaration, c)),
-				diagnostic);
+			context.RegisterCodeFix(CodeAction.Create("Change with lamda", c => LiteralToLambdaAsync(context.Document, declaration, c)), diagnostic);
 		}
 
-		private async Task<Solution> MakeUppercaseAsync(Document document, TypeDeclarationSyntax typeDecl, CancellationToken cancellationToken)
+		private async Task<Document> LiteralToLambdaAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)
 		{
-			// Compute new uppercase name.
-			var identifierToken = typeDecl.Identifier;
-			var newName = identifierToken.Text.ToUpperInvariant();
+			var argumentList = invocationExpr.ArgumentList;
+			var incudePath = argumentList.Arguments[0].Expression;
 
-			// Get the symbol representing the type to be renamed.
-			var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
-			var typeSymbol = semanticModel.GetDeclaredSymbol(typeDecl, cancellationToken);
+			var lambdaPath = string.Format("a => a.{0}", incudePath.ToFullString().Trim('"'));
 
-			// Produce a new solution that has all references to that type renamed, including the declaration.
-			var originalSolution = document.Project.Solution;
-			var optionSet = originalSolution.Workspace.Options;
-			var newSolution = await Renamer.RenameSymbolAsync(document.Project.Solution, typeSymbol, newName, optionSet, cancellationToken).ConfigureAwait(false);
+			var lambdaExpression = SyntaxFactory.ParseExpression(lambdaPath)
+									   .WithAdditionalAnnotations(Formatter.Annotation);
 
-			// Return the new solution with the now-uppercase type name.
-			return newSolution;
+			var stringLiteralExpression = invocationExpr.ArgumentList.Arguments[0].Expression;
+
+			var root = await document.GetSyntaxRootAsync(cancellationToken);
+			var newRoot = root.ReplaceNode(stringLiteralExpression, lambdaExpression);
+			var newDocument = document.WithSyntaxRoot(newRoot);
+
+			return newDocument;
 		}
 	}
 }
