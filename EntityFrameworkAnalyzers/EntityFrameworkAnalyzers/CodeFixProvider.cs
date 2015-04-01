@@ -15,6 +15,8 @@ namespace EntityFrameworkAnalyzers
 	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(EntityFrameworkAnalyzersCodeFixProvider)), Shared]
 	public class EntityFrameworkAnalyzersCodeFixProvider : CodeFixProvider
 	{
+		private const string SystemDataEntityNamespace = "System.Data.Entity";
+
 		public sealed override ImmutableArray<string> FixableDiagnosticIds
 		{
 			get { return ImmutableArray.Create(EntityFrameworkAnalyzersAnalyzer.DiagnosticId); }
@@ -34,7 +36,7 @@ namespace EntityFrameworkAnalyzers
 
 			// Find the type declaration identified by the diagnostic.
 			var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>().First();
-			
+
 			// Register a code action that will invoke the fix.
 			context.RegisterCodeFix(CodeAction.Create("Change with lamda", c => LiteralToLambdaAsync(context.Document, declaration, c)), diagnostic);
 		}
@@ -47,14 +49,22 @@ namespace EntityFrameworkAnalyzers
 			var lambdaPath = string.Format("a => a.{0}", incudePath.ToFullString().Trim('"'));
 
 			var lambdaExpression = SyntaxFactory.ParseExpression(lambdaPath)
-									   .WithAdditionalAnnotations(Formatter.Annotation);
+												.WithAdditionalAnnotations(Formatter.Annotation);
 
 			var stringLiteralExpression = invocationExpr.ArgumentList.Arguments[0].Expression;
 
-			var root = await document.GetSyntaxRootAsync(cancellationToken);
+			var root = await document.GetSyntaxRootAsync(cancellationToken) as CompilationUnitSyntax;
 			var newRoot = root.ReplaceNode(stringLiteralExpression, lambdaExpression);
-			var newDocument = document.WithSyntaxRoot(newRoot);
 
+			var needsUsing = !newRoot.ChildNodes().OfType<UsingDirectiveSyntax>().Any(u => u.Name.ToString().Equals(SystemDataEntityNamespace));
+
+			if (needsUsing)
+			{
+				var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(SystemDataEntityNamespace));
+				newRoot = newRoot.AddUsings(usingDirective).WithAdditionalAnnotations(Formatter.Annotation);
+			}
+
+			var newDocument = document.WithSyntaxRoot(newRoot);
 			return newDocument;
 		}
 	}
