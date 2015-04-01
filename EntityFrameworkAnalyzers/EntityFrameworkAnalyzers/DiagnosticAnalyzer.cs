@@ -27,7 +27,6 @@ namespace EntityFrameworkAnalyzers
 
 		public override void Initialize(AnalysisContext context)
 		{
-			// TODO: Consider registering other actions that act on syntax instead of or in addition to symbols
 			context.RegisterSyntaxNodeAction(AnalyzeSymbol, SyntaxKind.InvocationExpression);
 		}
 
