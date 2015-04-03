@@ -6,8 +6,8 @@
     <title>Code Analyzers and Fixers for Common Entity Framework Issues.</title>
     <authors>Giorgi Dalakishvili</authors>
     <owners>Giorgi Dalakishvili</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
+    <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
+    <projectUrl>https://github.com/Giorgi/Entity-Framework-Analyzers</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Code Analyzers and Fixers for Common Entity Framework Issues built by .NET Compiler Platform ("Roslyn") </description>
     <releaseNotes>Added analyzer for using strongly typed Include method.</releaseNotes>

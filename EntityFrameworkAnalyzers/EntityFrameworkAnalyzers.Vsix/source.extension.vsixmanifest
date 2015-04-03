@@ -4,6 +4,8 @@
 		<Identity Id="EntityFrameworkAnalyzers.Vsix..3ca2ce1d-4601-4bc6-8f2c-52042931caef" Version="1.0" Language="en-US" Publisher="Giorgi Dalakishvili"/>
 		<DisplayName>Code Analyzers and Fixers for Entity Framework</DisplayName>
 		<Description xml:space="preserve">Code Analyzers and Fixers for Common Entity Framework Issues built by .NET Compiler Platform ("Roslyn") </Description>
+		<MoreInfo>https://github.com/Giorgi/Entity-Framework-Analyzers</MoreInfo>
+		<License>License.txt</License>
 	</Metadata>
 	<Installation>
 		<InstallationTarget Version="[14.0,]" Id="Microsoft.VisualStudio.Pro" />
