@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("EntityFrameworkAnalyzers")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Code Analyzers and Fixers for Common Entity Framework Issues.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("EntityFrameworkAnalyzers")]
-[assembly: AssemblyCopyright("Copyright ©  2015")]
+[assembly: AssemblyCopyright("Copyright (c) 2015 by Giorgi Dalakishvili")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
