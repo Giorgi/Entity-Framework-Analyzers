@@ -13,14 +13,14 @@ using Microsoft.CodeAnalysis.Formatting;
 
 namespace EntityFrameworkAnalyzers
 {
-	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(EntityFrameworkAnalyzersCodeFixProvider)), Shared]
-	public class EntityFrameworkAnalyzersCodeFixProvider : CodeFixProvider
+	[ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(UseIncludeWithLambdaAnalyzerCodeFixProvider)), Shared]
+	public class UseIncludeWithLambdaAnalyzerCodeFixProvider : CodeFixProvider
 	{
 		private const string SystemDataEntityNamespace = "System.Data.Entity";
 
 		public sealed override ImmutableArray<string> FixableDiagnosticIds
 		{
-			get { return ImmutableArray.Create(EntityFrameworkAnalyzersAnalyzer.DiagnosticId); }
+			get { return ImmutableArray.Create(UseIncludeWithLambdaAnalyzer.DiagnosticId); }
 		}
 
 		public sealed override FixAllProvider GetFixAllProvider()

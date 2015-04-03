@@ -41,7 +41,7 @@ namespace EntityFrameworkAnalyzers.Test
     }";
 			var expected = new DiagnosticResult
 			{
-				Id = EntityFrameworkAnalyzersAnalyzer.DiagnosticId,
+				Id = UseIncludeWithLambdaAnalyzer.DiagnosticId,
 				Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
 				Severity = DiagnosticSeverity.Warning,
 				Locations =
@@ -71,12 +71,12 @@ namespace EntityFrameworkAnalyzers.Test
 
 		protected override CodeFixProvider GetCSharpCodeFixProvider()
 		{
-			return new EntityFrameworkAnalyzersCodeFixProvider();
+			return new UseIncludeWithLambdaAnalyzerCodeFixProvider();
 		}
 
 		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
 		{
-			return new EntityFrameworkAnalyzersAnalyzer();
+			return new UseIncludeWithLambdaAnalyzer();
 		}
 	}
 }

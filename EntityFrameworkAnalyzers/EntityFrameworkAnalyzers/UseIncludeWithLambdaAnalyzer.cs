@@ -11,7 +11,7 @@ using Microsoft.CodeAnalysis.Diagnostics;
 namespace EntityFrameworkAnalyzers
 {
 	[DiagnosticAnalyzer(LanguageNames.CSharp)]
-	public class EntityFrameworkAnalyzersAnalyzer : DiagnosticAnalyzer
+	public class UseIncludeWithLambdaAnalyzer : DiagnosticAnalyzer
 	{
 		public const string DiagnosticId = "EntityFrameworkAnalyzers";
 
