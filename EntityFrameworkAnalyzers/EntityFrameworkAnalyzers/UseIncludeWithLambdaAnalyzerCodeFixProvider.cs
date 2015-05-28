@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Composition;
 using System.Linq;
@@ -44,12 +46,63 @@ namespace EntityFrameworkAnalyzers
 
 		private async Task<Document> LiteralToLambdaAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)
 		{
-			var lambdaVariableName = await FindAvailabeVariableName(document, invocationExpr, cancellationToken);
+			var generatedVariables = new List<string>();
+
+			var lambdaVariableName = await FindAvailabeVariableName(document, invocationExpr, cancellationToken, generatedVariables);
+
+			generatedVariables.Add(lambdaVariableName);
 
 			var argumentList = invocationExpr.ArgumentList;
 			var incudePath = argumentList.Arguments[0].Expression;
 
-			var lambdaPath = string.Format("{0} => {0}.{1}", lambdaVariableName, incudePath.ToFullString().Trim('"'));
+			var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
+
+			var method = semanticModel.GetSymbolInfo(invocationExpr).Symbol as IMethodSymbol;
+			var underlyingType = (method.ReceiverType as INamedTypeSymbol).TypeArguments[0];
+
+			var paths = incudePath.ToFullString().Trim('"').Split('.');
+
+			var lambdaPath = string.Format("{0} => {0}", lambdaVariableName);
+
+			var nestedLevels = 0;
+			var previousPropertyIsCollection = false;
+
+			foreach (var path in paths)
+			{
+				var property = underlyingType.GetMembers(path).SingleOrDefault(symbol => symbol.Kind == SymbolKind.Property) as IPropertySymbol;
+
+				if (property == null)
+				{
+					return document;
+				}
+
+				lambdaPath += ".";
+
+				if (previousPropertyIsCollection)
+				{
+					var innerLambdaVariableName = await FindAvailabeVariableName(document, invocationExpr, cancellationToken, generatedVariables);
+					generatedVariables.Add(innerLambdaVariableName);
+
+					lambdaPath += string.Format("Select({0}=>{0}.{1}", innerLambdaVariableName, path);
+					nestedLevels++;
+				}
+				else
+				{
+					lambdaPath += path;
+				}
+
+				previousPropertyIsCollection = property.Type.AllInterfaces.Any(x => x.Name == typeof(IEnumerable).Name
+																			     || x.Name == typeof(IEnumerable<>).Name);
+
+				// If the property is List<T> or ICollection<T> get the underlying type for next iteration.
+				var typeArguments = (property.Type as INamedTypeSymbol).TypeArguments;
+				if (typeArguments.Any())
+				{
+					underlyingType = typeArguments[0];
+				}
+			}
+
+			lambdaPath += new string(')', nestedLevels);
 
 			var lambdaExpression = SyntaxFactory.ParseExpression(lambdaPath)
 												.WithAdditionalAnnotations(Formatter.Annotation);
@@ -71,7 +124,7 @@ namespace EntityFrameworkAnalyzers
 			return newDocument;
 		}
 
-		private static async Task<string> FindAvailabeVariableName(Document document, SyntaxNode invocationExpr, CancellationToken cancellationToken)
+		private static async Task<string> FindAvailabeVariableName(Document document, SyntaxNode invocationExpr, CancellationToken cancellationToken, List<string> generatedVariables)
 		{
 			var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
 
@@ -79,16 +132,21 @@ namespace EntityFrameworkAnalyzers
 			do
 			{
 				var name = ToVariableName(currentChar);
-				var immutableArray = semanticModel.LookupSymbols(invocationExpr.SpanStart, name: name);
 
-				if (immutableArray.Length == 0)
+				//Ignore name if it was already generated
+				if (!generatedVariables.Contains(name))
 				{
-					return name;
-				}
+					var immutableArray = semanticModel.LookupSymbols(invocationExpr.SpanStart, name: name);
 
-				if (immutableArray.All(symbol => symbol.Kind != SymbolKind.Local && symbol.Kind != SymbolKind.Parameter))
-				{
-					return name;
+					if (immutableArray.Length == 0)
+					{
+						return name;
+					}
+
+					if (immutableArray.All(symbol => symbol.Kind != SymbolKind.Local && symbol.Kind != SymbolKind.Parameter))
+					{
+						return name;
+					}
 				}
 
 				currentChar++;
