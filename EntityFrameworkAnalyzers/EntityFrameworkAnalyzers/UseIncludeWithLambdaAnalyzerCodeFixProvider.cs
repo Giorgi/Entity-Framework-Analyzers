@@ -91,14 +91,12 @@ namespace EntityFrameworkAnalyzers
 					lambdaPath += path;
 				}
 
-				previousPropertyIsCollection = property.Type.AllInterfaces.Any(x => x.Name == typeof(IEnumerable).Name
-																			     || x.Name == typeof(IEnumerable<>).Name);
+				previousPropertyIsCollection = property.Type.AllInterfaces.Any(x => x.Name == typeof(IEnumerable<>).Name);
 
 				// If the property is List<T> or ICollection<T> get the underlying type for next iteration.
-				var typeArguments = (property.Type as INamedTypeSymbol).TypeArguments;
-				if (typeArguments.Any())
+				if (previousPropertyIsCollection)
 				{
-					underlyingType = typeArguments[0];
+					underlyingType = (property.Type as INamedTypeSymbol).TypeArguments[0];
 				}
 			}
 
