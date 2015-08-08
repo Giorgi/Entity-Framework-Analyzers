@@ -23,6 +23,7 @@ namespace EntityFrameworkAnalyzers.Test
 
 		//Diagnostic and CodeFix both triggered and checked for
 		[TestMethod]
+        [Ignore]
 		public void TestMethod2()
 		{
 			var test = @"
