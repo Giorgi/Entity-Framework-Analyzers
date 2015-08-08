@@ -1,14 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.22609.0
+VisualStudioVersion = 14.0.23107.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkAnalyzers", "EntityFrameworkAnalyzers\EntityFrameworkAnalyzers\EntityFrameworkAnalyzers.csproj", "{DF39E52F-7EB1-4974-A719-2854B7D45FA2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C8763561-BDB1-415B-A983-9AC12EA3DC3E}"
-	ProjectSection(SolutionItems) = preProject
-		.nuget\packages.config = .nuget\packages.config
-	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFrameworkAnalyzers.Test", "EntityFrameworkAnalyzers\EntityFrameworkAnalyzers.Test\EntityFrameworkAnalyzers.Test.csproj", "{744060C6-2918-4CBC-A2CA-7465C7F1C3C9}"
 EndProject

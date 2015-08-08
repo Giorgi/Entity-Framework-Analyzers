@@ -26,8 +26,8 @@ To try out the NuGet package:
 
 If you want to automatically deploy the .nupkg file to the local feed folder
 when you build this project, follow these steps:
- 1. Right-click on this project in Solution Explorer and choose Properties.
- 2. Go to the Compile tab.
- 3. Click the Build Events button.
- 4. In the "Post-build event command line" box, change the -OutputDirectory
+ 1. Right-click on this project in Solution Explorer and choose 'Unload Project'.
+ 2. Right-click on this project and click "Edit".
+ 3. Scroll down to the "AfterBuild" target.
+ 4. In the "Exec" task, change the value inside "Command" after the -OutputDirectory
     path to point to your local NuGet feed folder.
