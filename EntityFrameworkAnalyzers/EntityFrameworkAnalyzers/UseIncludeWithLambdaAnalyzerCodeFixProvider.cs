@@ -97,7 +97,7 @@ namespace EntityFrameworkAnalyzers
                     lambdaPath += path;
                 }
 
-                previousPropertyIsCollection = property.Type.AllInterfaces.Any(x => x.Name == typeof(IEnumerable<>).Name);
+                previousPropertyIsCollection = property.Type.AllInterfaces.Any(x => x.MetadataName == typeof(IEnumerable<>).Name);
 
                 // If the property is List<T> or ICollection<T> get the underlying type for next iteration.
                 if (previousPropertyIsCollection)
