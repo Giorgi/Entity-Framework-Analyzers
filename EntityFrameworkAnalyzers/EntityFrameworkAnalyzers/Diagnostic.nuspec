@@ -3,7 +3,7 @@
   <metadata>
     <id>EntityFrameworkAnalyzers</id>
     <version>1.0.0.0</version>
-    <title>Code Analyzers and Fixers for Common Entity Framework Issues.</title>
+    <title>Entity Framework Analyzers.</title>
     <authors>Giorgi Dalakishvili</authors>
     <owners>Giorgi Dalakishvili</owners>
     <licenseUrl>http://www.apache.org/licenses/LICENSE-2.0</licenseUrl>
@@ -12,7 +12,7 @@
     <description>Code Analyzers and Fixers for Common Entity Framework Issues built by .NET Compiler Platform ("Roslyn") </description>
     <releaseNotes>Added analyzer for using strongly typed Include method.</releaseNotes>
     <copyright>Copyright (c) 2015 by Giorgi Dalakishvili</copyright>
-    <tags>EntityFramework, analyzers, roslyn</tags>
+    <tags>EntityFramework, Analyzers, Roslyn, Diagnostics</tags>
     <frameworkAssemblies>
       <frameworkAssembly assemblyName="System" targetFramework="" />
     </frameworkAssemblies>
