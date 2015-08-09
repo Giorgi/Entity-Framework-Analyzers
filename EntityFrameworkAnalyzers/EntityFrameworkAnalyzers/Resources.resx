@@ -129,4 +129,7 @@
     <value>Use Include method with lambda overload instead of string path</value>
     <comment>The title of the diagnostic.</comment>
   </data>
+  <data name="ChangeWithLambda" xml:space="preserve">
+    <value>ChangeWithLambda</value>
+  </data>
 </root>
