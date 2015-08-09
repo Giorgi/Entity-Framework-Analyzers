@@ -38,8 +38,13 @@ namespace EntityFrameworkAnalyzers
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
+
+            var semanticModelAsync = await context.Document.GetSemanticModelAsync(context.CancellationToken);
+
             // Find the type declaration identified by the diagnostic.
-            var declaration = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>().First();
+            var invocations = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>();
+
+            var declaration = invocations.First(syntax => (semanticModelAsync.GetSymbolInfo(syntax).Symbol as IMethodSymbol)?.Name == "Include");
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(CodeAction.Create(title, c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1000CodeFixProvider"), diagnostic);
