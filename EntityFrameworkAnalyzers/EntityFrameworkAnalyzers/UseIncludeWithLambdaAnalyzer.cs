@@ -39,9 +39,9 @@ namespace EntityFrameworkAnalyzers
                 return;
             }
 
-            var memberSymbol = context.SemanticModel.GetSymbolInfo(invocationExpr).Symbol as IMethodSymbol;
+            var memberSymbol = context.SemanticModel.GetSymbolInfo(invocationExpr).Symbol;
 
-            if (memberSymbol == null || memberSymbol.Name != "Include")
+            if (memberSymbol?.Name != "Include")
             {
                 return;
             }

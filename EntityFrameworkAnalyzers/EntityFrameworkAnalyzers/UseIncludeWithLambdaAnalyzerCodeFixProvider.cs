@@ -44,7 +44,7 @@ namespace EntityFrameworkAnalyzers
             // Find the type declaration identified by the diagnostic.
             var invocations = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>();
 
-            var declaration = invocations.First(syntax => (semanticModelAsync.GetSymbolInfo(syntax).Symbol as IMethodSymbol)?.Name == "Include");
+            var declaration = invocations.First(syntax => (semanticModelAsync.GetSymbolInfo(syntax).Symbol)?.Name == "Include");
 
             // Register a code action that will invoke the fix.
             context.RegisterCodeFix(CodeAction.Create(title, c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1000CodeFixProvider"), diagnostic);
@@ -64,18 +64,18 @@ namespace EntityFrameworkAnalyzers
             var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
 
             var method = semanticModel.GetSymbolInfo(invocationExpr).Symbol as IMethodSymbol;
-            var underlyingType = (method.ReceiverType as INamedTypeSymbol).TypeArguments[0];
+            var underlyingType = (method?.ReceiverType as INamedTypeSymbol)?.TypeArguments[0];
 
             var paths = incudePath.ToFullString().Trim('"').Split('.');
 
-            var lambdaPath = string.Format("{0} => {0}", lambdaVariableName);
+            var lambdaPath = $"{lambdaVariableName} => {lambdaVariableName}";
 
             var nestedLevels = 0;
             var previousPropertyIsCollection = false;
 
             foreach (var path in paths)
             {
-                var property = underlyingType.GetMembers(path).SingleOrDefault(symbol => symbol.Kind == SymbolKind.Property) as IPropertySymbol;
+                var property = underlyingType?.GetMembers(path).SingleOrDefault(symbol => symbol.Kind == SymbolKind.Property) as IPropertySymbol;
 
                 if (property == null)
                 {
@@ -89,7 +89,7 @@ namespace EntityFrameworkAnalyzers
                     var innerLambdaVariableName = await FindAvailabeVariableName(document, invocationExpr, cancellationToken, generatedVariables);
                     generatedVariables.Add(innerLambdaVariableName);
 
-                    lambdaPath += string.Format("Select({0}=>{0}.{1}", innerLambdaVariableName, path);
+                    lambdaPath += $"Select({innerLambdaVariableName}=>{innerLambdaVariableName}.{path}";
                     nestedLevels++;
                 }
                 else
@@ -102,7 +102,7 @@ namespace EntityFrameworkAnalyzers
                 // If the property is List<T> or ICollection<T> get the underlying type for next iteration.
                 if (previousPropertyIsCollection)
                 {
-                    underlyingType = (property.Type as INamedTypeSymbol).TypeArguments[0];
+                    underlyingType = (property.Type as INamedTypeSymbol)?.TypeArguments[0];
                 }
             }
 
