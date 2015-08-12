@@ -32,6 +32,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ConstructorCallAnalyzer.cs" />
+    <Compile Include="ConstructorCallAnalyzerCodeFixProvider.cs" />
     <Compile Include="UseIncludeWithLambdaAnalyzerCodeFixProvider.cs" />
     <Compile Include="UseIncludeWithLambdaAnalyzer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

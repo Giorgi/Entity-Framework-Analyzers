@@ -71,6 +71,33 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Calling class constructor on Queryable will throw an exception.
+        /// </summary>
+        internal static string ConstructorCallQueryableDescription {
+            get {
+                return ResourceManager.GetString("ConstructorCallQueryableDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calling class constructor on Queryable will throw an exception.
+        /// </summary>
+        internal static string ConstructorCallQueryableMessageFormat {
+            get {
+                return ResourceManager.GetString("ConstructorCallQueryableMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Calling class constructor on Queryable will throw an exception.
+        /// </summary>
+        internal static string ConstructorCallQueryableTitle {
+            get {
+                return ResourceManager.GetString("ConstructorCallQueryableTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Include method with lambda overload. This provides compile time validation and refactoring support.
         /// </summary>
         internal static string IncludeLambdaAnalyzerDescription {
