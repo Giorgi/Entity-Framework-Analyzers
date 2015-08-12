@@ -62,38 +62,38 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ChangeWithLambda.
+        /// </summary>
+        internal static string ChangeWithLambda {
+            get {
+                return ResourceManager.GetString("ChangeWithLambda", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Include method with lambda overload. This provides compile time validation and refactoring support.
         /// </summary>
-        internal static string AnalyzerDescription {
+        internal static string IncludeLambdaAnalyzerDescription {
             get {
-                return ResourceManager.GetString("AnalyzerDescription", resourceCulture);
+                return ResourceManager.GetString("IncludeLambdaAnalyzerDescription", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Use Include method with lambda overload.
         /// </summary>
-        internal static string AnalyzerMessageFormat {
+        internal static string IncludeLambdaAnalyzerMessageFormat {
             get {
-                return ResourceManager.GetString("AnalyzerMessageFormat", resourceCulture);
+                return ResourceManager.GetString("IncludeLambdaAnalyzerMessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Use Include method with lambda overload instead of string path.
         /// </summary>
-        internal static string AnalyzerTitle {
+        internal static string IncludeLambdaAnalyzerTitle {
             get {
-                return ResourceManager.GetString("AnalyzerTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ChangeWithLambda.
-        /// </summary>
-        internal static string ChangeWithLambda {
-            get {
-                return ResourceManager.GetString("ChangeWithLambda", resourceCulture);
+                return ResourceManager.GetString("IncludeLambdaAnalyzerTitle", resourceCulture);
             }
         }
     }

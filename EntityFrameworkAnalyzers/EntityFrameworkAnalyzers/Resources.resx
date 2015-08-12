@@ -117,19 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AnalyzerDescription" xml:space="preserve">
+  <data name="ChangeWithLambda" xml:space="preserve">
+    <value>ChangeWithLambda</value>
+  </data>
+  <data name="IncludeLambdaAnalyzerDescription" xml:space="preserve">
     <value>Use Include method with lambda overload. This provides compile time validation and refactoring support</value>
     <comment>An optional longer localizable description of the diagnostic.</comment>
   </data>
-  <data name="AnalyzerMessageFormat" xml:space="preserve">
+  <data name="IncludeLambdaAnalyzerMessageFormat" xml:space="preserve">
     <value>Use Include method with lambda overload</value>
     <comment>The format-able message the diagnostic displays.</comment>
   </data>
-  <data name="AnalyzerTitle" xml:space="preserve">
+  <data name="IncludeLambdaAnalyzerTitle" xml:space="preserve">
     <value>Use Include method with lambda overload instead of string path</value>
     <comment>The title of the diagnostic.</comment>
-  </data>
-  <data name="ChangeWithLambda" xml:space="preserve">
-    <value>ChangeWithLambda</value>
   </data>
 </root>
