@@ -141,4 +141,7 @@
     <value>Use Include method with lambda overload instead of string path</value>
     <comment>The title of the diagnostic.</comment>
   </data>
+  <data name="ConvertToEnumerable" xml:space="preserve">
+    <value>Convert query to enumerable</value>
+  </data>
 </root>

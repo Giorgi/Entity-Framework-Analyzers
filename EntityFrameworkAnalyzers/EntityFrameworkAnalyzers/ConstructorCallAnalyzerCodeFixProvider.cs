@@ -1,6 +1,4 @@
-﻿using System;
-using System.Composition;
-using System.Collections.Generic;
+﻿using System.Composition;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
@@ -10,8 +8,6 @@ using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.CodeActions;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Rename;
-using Microsoft.CodeAnalysis.Text;
 
 namespace EntityFrameworkAnalyzers
 {
@@ -44,12 +40,23 @@ namespace EntityFrameworkAnalyzers
             var declaration = invocations.First(syntax => (semanticModelAsync.GetSymbolInfo(syntax).Symbol)?.Name == "Select");
 
             // Register a code action that will invoke the fix.
-            context.RegisterCodeFix(CodeAction.Create("", c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1001CodeFixProvider"), diagnostic);
+            context.RegisterCodeFix(CodeAction.Create(Resources.ConvertToEnumerable, c => AddAsEnumerableAsync(context.Document, declaration, c), "EF1001CodeFixProvider"), diagnostic);
         }
 
-        private async Task<Document> LiteralToLambdaAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)
+        private async Task<Document> AddAsEnumerableAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)
         {
-            return document;
+            var memberAccessExpressionSyntax = invocationExpr.Expression as MemberAccessExpressionSyntax;
+
+            var root = await document.GetSyntaxRootAsync(cancellationToken);
+
+            var accessExpression = SyntaxFactory.MemberAccessExpression(SyntaxKind.SimpleMemberAccessExpression, memberAccessExpressionSyntax.Expression, SyntaxFactory.IdentifierName("AsEnumerable"));
+
+            var invocationExpression = SyntaxFactory.InvocationExpression(accessExpression);
+            var enumerableMemberAccessExpression = memberAccessExpressionSyntax.WithExpression(invocationExpression);
+
+            root = root.ReplaceNode(invocationExpr, invocationExpr.WithExpression(enumerableMemberAccessExpression));
+
+            return document.WithSyntaxRoot(root);
         }
     }
 }

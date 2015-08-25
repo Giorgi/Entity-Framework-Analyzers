@@ -98,6 +98,15 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Convert query to enumerable.
+        /// </summary>
+        internal static string ConvertToEnumerable {
+            get {
+                return ResourceManager.GetString("ConvertToEnumerable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Use Include method with lambda overload. This provides compile time validation and refactoring support.
         /// </summary>
         internal static string IncludeLambdaAnalyzerDescription {
