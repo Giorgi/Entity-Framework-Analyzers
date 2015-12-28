@@ -132,5 +132,32 @@ namespace EntityFrameworkAnalyzers {
                 return ResourceManager.GetString("IncludeLambdaAnalyzerTitle", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using overload with expression tree will generate sql which is parameterized and can be reused for different values.
+        /// </summary>
+        internal static string UsePaginationExpressionTreeOverloadDescription {
+            get {
+                return ResourceManager.GetString("UsePaginationExpressionTreeOverloadDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use overload with expression tree to get parameterized query.
+        /// </summary>
+        internal static string UsePaginationExpressionTreeOverloadMessageFormat {
+            get {
+                return ResourceManager.GetString("UsePaginationExpressionTreeOverloadMessageFormat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use overload with expression tree.
+        /// </summary>
+        internal static string UsePaginationExpressionTreeOverloadTitle {
+            get {
+                return ResourceManager.GetString("UsePaginationExpressionTreeOverloadTitle", resourceCulture);
+            }
+        }
     }
 }
