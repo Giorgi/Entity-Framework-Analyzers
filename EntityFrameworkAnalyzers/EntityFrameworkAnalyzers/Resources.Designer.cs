@@ -134,29 +134,29 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Using overload with expression tree will generate sql which is parameterized and can be reused for different values.
+        ///   Looks up a localized string similar to Using overload which takes lambda will generate parameterized sql and query plan can be reused for different values.
         /// </summary>
-        internal static string UsePaginationExpressionTreeOverloadDescription {
+        internal static string UsePaginationLambdaOverloadDescription {
             get {
-                return ResourceManager.GetString("UsePaginationExpressionTreeOverloadDescription", resourceCulture);
+                return ResourceManager.GetString("UsePaginationLambdaOverloadDescription", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use overload with expression tree to get parameterized query.
+        ///   Looks up a localized string similar to Use overload which takes lambda to get parameterized query when calling {0}.
         /// </summary>
-        internal static string UsePaginationExpressionTreeOverloadMessageFormat {
+        internal static string UsePaginationLambdaOverloadMessageFormat {
             get {
-                return ResourceManager.GetString("UsePaginationExpressionTreeOverloadMessageFormat", resourceCulture);
+                return ResourceManager.GetString("UsePaginationLambdaOverloadMessageFormat", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use overload with expression tree.
+        ///   Looks up a localized string similar to Use overload which takes lambda.
         /// </summary>
-        internal static string UsePaginationExpressionTreeOverloadTitle {
+        internal static string UsePaginationLambdaOverloadTitle {
             get {
-                return ResourceManager.GetString("UsePaginationExpressionTreeOverloadTitle", resourceCulture);
+                return ResourceManager.GetString("UsePaginationLambdaOverloadTitle", resourceCulture);
             }
         }
     }

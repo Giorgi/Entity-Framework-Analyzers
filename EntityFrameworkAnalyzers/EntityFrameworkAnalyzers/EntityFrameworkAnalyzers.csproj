@@ -42,7 +42,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="UsePaginationExpressionTreeOverloadAnalyzer.cs" />
+    <Compile Include="UsePaginationWithLambdaOverloadAnalyzer.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">

@@ -144,13 +144,13 @@
   <data name="ConvertToEnumerable" xml:space="preserve">
     <value>Convert query to enumerable</value>
   </data>
-  <data name="UsePaginationExpressionTreeOverloadDescription" xml:space="preserve">
-    <value>Using overload with expression tree will generate sql which is parameterized and can be reused for different values</value>
+  <data name="UsePaginationLambdaOverloadDescription" xml:space="preserve">
+    <value>Using overload which takes lambda will generate parameterized sql and query plan can be reused for different values</value>
   </data>
-  <data name="UsePaginationExpressionTreeOverloadMessageFormat" xml:space="preserve">
-    <value>Use overload with expression tree to get parameterized query</value>
+  <data name="UsePaginationLambdaOverloadMessageFormat" xml:space="preserve">
+    <value>Use overload which takes lambda to get parameterized query when calling {0}</value>
   </data>
-  <data name="UsePaginationExpressionTreeOverloadTitle" xml:space="preserve">
-    <value>Use overload with expression tree</value>
+  <data name="UsePaginationLambdaOverloadTitle" xml:space="preserve">
+    <value>Use overload which takes lambda</value>
   </data>
 </root>
