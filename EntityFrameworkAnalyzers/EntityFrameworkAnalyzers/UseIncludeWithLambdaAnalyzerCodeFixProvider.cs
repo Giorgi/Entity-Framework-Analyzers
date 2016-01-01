@@ -116,14 +116,8 @@ namespace EntityFrameworkAnalyzers
             var root = await document.GetSyntaxRootAsync(cancellationToken) as CompilationUnitSyntax;
             var newRoot = root.ReplaceNode(stringLiteralExpression, lambdaExpression);
 
-            var needsUsing = !newRoot.ChildNodes().OfType<UsingDirectiveSyntax>().Any(u => u.Name.ToString().Equals(SystemDataEntityNamespace));
-
-            if (needsUsing)
-            {
-                var usingDirective = SyntaxFactory.UsingDirective(SyntaxFactory.ParseName(SystemDataEntityNamespace));
-                newRoot = newRoot.AddUsings(usingDirective).WithAdditionalAnnotations(Formatter.Annotation);
-            }
-
+            newRoot = newRoot.AddUsings(SystemDataEntityNamespace);
+            
             var newDocument = document.WithSyntaxRoot(newRoot);
             return newDocument;
         }
