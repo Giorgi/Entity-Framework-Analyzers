@@ -44,6 +44,7 @@
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="UsePaginationWithLambdaOverloadAnalyzer.cs" />
+    <Compile Include="UsePaginationWithLambdaOverloadAnalyzerCodeFixProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources.resx">
