@@ -62,7 +62,7 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ChangeWithLambda.
+        ///   Looks up a localized string similar to Change With Lambda.
         /// </summary>
         internal static string ChangeWithLambda {
             get {

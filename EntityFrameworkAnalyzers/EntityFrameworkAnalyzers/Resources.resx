@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ChangeWithLambda" xml:space="preserve">
-    <value>ChangeWithLambda</value>
+    <value>Change With Lambda</value>
   </data>
   <data name="ConstructorCallQueryableDescription" xml:space="preserve">
     <value>Calling class constructor on Queryable will throw an exception</value>
