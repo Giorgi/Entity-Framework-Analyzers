@@ -44,14 +44,17 @@ namespace EntityFrameworkAnalyzers
             // Find the type declaration identified by the diagnostic.
             var invocations = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>();
 
-            var declaration = invocations.First(syntax =>
+            var declarations = invocations.Where(syntax =>
             {
                 var name = semanticModelAsync.GetSymbolInfo(syntax).Symbol?.Name;
                 return name == "Take" || name == "Skip";
             });
 
             // Register a code action that will invoke the fix.
-            context.RegisterCodeFix(CodeAction.Create(Resources.ChangeWithLambda, c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1002CodeFixProvider"), diagnostic);
+            foreach (var declaration in declarations)
+            {
+                context.RegisterCodeFix(CodeAction.Create(Resources.ChangeWithLambda, c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1002CodeFixProvider"), diagnostic); 
+            }
         }
 
         private async Task<Document> LiteralToLambdaAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)

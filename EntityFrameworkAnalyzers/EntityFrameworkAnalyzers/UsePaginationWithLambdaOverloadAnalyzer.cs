@@ -55,7 +55,9 @@ namespace EntityFrameworkAnalyzers
                 return;
             }
 
-            var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetLocation(), memberSymbol.Name);
+            var location = invocationExpr.GetInvocationLocationWithArguments();
+
+            var diagnostic = Diagnostic.Create(Rule, location, memberSymbol.Name);
             context.ReportDiagnostic(diagnostic);
         }
     }

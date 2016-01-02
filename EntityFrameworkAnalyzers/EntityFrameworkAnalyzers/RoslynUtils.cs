@@ -7,12 +7,13 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.Text;
 
 namespace EntityFrameworkAnalyzers
 {
     static class RoslynUtils
     {
-        public static CompilationUnitSyntax AddUsings(this CompilationUnitSyntax compilationUnit, params string[] usings)
+        internal static CompilationUnitSyntax AddUsings(this CompilationUnitSyntax compilationUnit, params string[] usings)
         {
             foreach (var @using in usings)
             {
@@ -28,12 +29,12 @@ namespace EntityFrameworkAnalyzers
             return compilationUnit;
         }
 
-        public static async Task<string> FindAvailabeVariableName(this Document document, SyntaxNode scope, CancellationToken cancellationToken)
+        internal static async Task<string> FindAvailabeVariableName(this Document document, SyntaxNode scope, CancellationToken cancellationToken)
         {
             return await FindAvailabeVariableName(document, scope, cancellationToken, new List<string>());
         }
 
-        public static async Task<string> FindAvailabeVariableName(this Document document, SyntaxNode scope, CancellationToken cancellationToken, List<string> blackList)
+        internal static async Task<string> FindAvailabeVariableName(this Document document, SyntaxNode scope, CancellationToken cancellationToken, List<string> blackList)
         {
             var semanticModel = await document.GetSemanticModelAsync(cancellationToken);
             
@@ -75,6 +76,18 @@ namespace EntityFrameworkAnalyzers
             }
 
             return result;
+        }
+
+        internal static Location GetInvocationLocationWithArguments(this InvocationExpressionSyntax invokeExpression)
+        {
+            var memberAccess = invokeExpression?.ChildNodes().OfType<MemberAccessExpressionSyntax>().FirstOrDefault();
+
+            var nameSyntax = memberAccess?.Name;
+
+            var sourceSpan = nameSyntax.GetLocation().SourceSpan;
+            var location = Location.Create(invokeExpression.SyntaxTree, new TextSpan(sourceSpan.Start, sourceSpan.Length + invokeExpression.ArgumentList.GetLocation().SourceSpan.Length));
+
+            return location;
         }
     }
 }
