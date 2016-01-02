@@ -1,6 +1,4 @@
-﻿using System;
-using System.Composition;
-using System.Collections.Generic;
+﻿using System.Composition;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading;
@@ -12,9 +10,6 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Editing;
 using Microsoft.CodeAnalysis.Formatting;
-using Microsoft.CodeAnalysis.Rename;
-using Microsoft.CodeAnalysis.Simplification;
-using Microsoft.CodeAnalysis.Text;
 
 namespace EntityFrameworkAnalyzers
 {
@@ -23,7 +18,7 @@ namespace EntityFrameworkAnalyzers
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(UsePaginationWithLambdaOverloadAnalyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(Diagnostics.UsePaginationWithLambdaOverloadAnalyzerDiagnosticId); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()
@@ -50,10 +45,11 @@ namespace EntityFrameworkAnalyzers
                 return name == "Take" || name == "Skip";
             });
 
-            // Register a code action that will invoke the fix.
+
+            var equivalenceKey = $"{Diagnostics.UsePaginationWithLambdaOverloadAnalyzerDiagnosticId}CodeFixProvider";
             foreach (var declaration in declarations)
             {
-                context.RegisterCodeFix(CodeAction.Create(Resources.ChangeWithLambda, c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1002CodeFixProvider"), diagnostic); 
+                context.RegisterCodeFix(CodeAction.Create(Resources.UsePaginationLambdaOverloadCodeFixTitle, c => LiteralToLambdaAsync(context.Document, declaration, c), equivalenceKey), diagnostic);
             }
         }
 
@@ -94,7 +90,7 @@ namespace EntityFrameworkAnalyzers
 
             var newRoot = documentEditor.GetChangedRoot() as CompilationUnitSyntax;
 
-            newRoot = newRoot.AddUsings("System.Data.Entity");
+            newRoot = newRoot.AddUsings(Namespaces.System.Data.Entity);
 
             return document.WithSyntaxRoot(newRoot);
         }

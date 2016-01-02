@@ -13,15 +13,13 @@ namespace EntityFrameworkAnalyzers
     [DiagnosticAnalyzer(LanguageNames.CSharp)]
     public class UseIncludeWithLambdaAnalyzer : DiagnosticAnalyzer
     {
-        public const string DiagnosticId = "EF1000";
-
         // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
         internal static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.IncludeLambdaAnalyzerTitle), Resources.ResourceManager, typeof(Resources));
         internal static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.IncludeLambdaAnalyzerMessageFormat), Resources.ResourceManager, typeof(Resources));
         internal static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.IncludeLambdaAnalyzerDescription), Resources.ResourceManager, typeof(Resources));
         internal const string Category = "Usage";
 
-        internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(DiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description);
+        internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(Diagnostics.UseIncludeWithLambdaAnalyzerDiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description);
 
         public override ImmutableArray<DiagnosticDescriptor> SupportedDiagnostics { get { return ImmutableArray.Create(Rule); } }
 
@@ -62,7 +60,8 @@ namespace EntityFrameworkAnalyzers
 
             if (argumentList.Arguments[0].Expression.IsKind(SyntaxKind.StringLiteralExpression))
             {
-                var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetInvocationLocationWithArguments());
+                var literalExpression = argumentList.Arguments[0].Expression as LiteralExpressionSyntax;
+                var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetInvocationLocationWithArguments(), literalExpression.Token.ValueText);
                 context.ReportDiagnostic(diagnostic);
             }
         }

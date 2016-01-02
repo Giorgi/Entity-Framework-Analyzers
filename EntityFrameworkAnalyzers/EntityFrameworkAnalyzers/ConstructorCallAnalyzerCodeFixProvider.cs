@@ -16,7 +16,7 @@ namespace EntityFrameworkAnalyzers
     {
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(ConstructorCallAnalyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(Diagnostics.ConstructorCallAnalyzerDiagnosticId); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()
@@ -32,15 +32,15 @@ namespace EntityFrameworkAnalyzers
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
 
-            var semanticModelAsync = await context.Document.GetSemanticModelAsync(context.CancellationToken);
+            var semanticModel = await context.Document.GetSemanticModelAsync(context.CancellationToken);
 
             // Find the type declaration identified by the diagnostic.
             var invocations = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>();
 
-            var declaration = invocations.First(syntax => (semanticModelAsync.GetSymbolInfo(syntax).Symbol)?.Name == "Select");
+            var declaration = invocations.First(syntax => semanticModel.GetSymbolInfo(syntax).Symbol?.Name == "Select");
 
-            // Register a code action that will invoke the fix.
-            context.RegisterCodeFix(CodeAction.Create(Resources.ConvertToEnumerable, c => AddAsEnumerableAsync(context.Document, declaration, c), "EF1001CodeFixProvider"), diagnostic);
+            var equivalenceKey = $"{Diagnostics.ConstructorCallAnalyzerDiagnosticId}CodeFixProvider";
+            context.RegisterCodeFix(CodeAction.Create(Resources.ConstructorCallQueryableCodeFixTitle, c => AddAsEnumerableAsync(context.Document, declaration, c), equivalenceKey), diagnostic);
         }
 
         private async Task<Document> AddAsEnumerableAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)

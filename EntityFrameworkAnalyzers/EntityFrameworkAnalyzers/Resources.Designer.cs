@@ -62,16 +62,16 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change With Lambda.
+        ///   Looks up a localized string similar to Convert query to enumerable.
         /// </summary>
-        internal static string ChangeWithLambda {
+        internal static string ConstructorCallQueryableCodeFixTitle {
             get {
-                return ResourceManager.GetString("ChangeWithLambda", resourceCulture);
+                return ResourceManager.GetString("ConstructorCallQueryableCodeFixTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Calling class constructor on Queryable will throw an exception.
+        ///   Looks up a localized string similar to Calling class constructor on Queryable will throw an exception because it cannot be translated to sql statement.
         /// </summary>
         internal static string ConstructorCallQueryableDescription {
             get {
@@ -98,16 +98,7 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Convert query to enumerable.
-        /// </summary>
-        internal static string ConvertToEnumerable {
-            get {
-                return ResourceManager.GetString("ConvertToEnumerable", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Use Include method with lambda overload. This provides compile time validation and refactoring support.
+        ///   Looks up a localized string similar to Use Include method with lambda expression overload. This provides compile time validation and refactoring support.
         /// </summary>
         internal static string IncludeLambdaAnalyzerDescription {
             get {
@@ -116,7 +107,7 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Include method with lambda overload.
+        ///   Looks up a localized string similar to Use Include method with lambda expression overload instead of passing &apos;{0}&apos; as string.
         /// </summary>
         internal static string IncludeLambdaAnalyzerMessageFormat {
             get {
@@ -125,7 +116,7 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use Include method with lambda overload instead of string path.
+        ///   Looks up a localized string similar to Use Include method with lambda expression overload instead of string path.
         /// </summary>
         internal static string IncludeLambdaAnalyzerTitle {
             get {
@@ -134,7 +125,25 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Using overload which takes lambda will generate parameterized sql and query plan can be reused for different values.
+        ///   Looks up a localized string similar to Change Include with overload that takes a lambda expression.
+        /// </summary>
+        internal static string IncludeLambdaCodeFixTitle {
+            get {
+                return ResourceManager.GetString("IncludeLambdaCodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change to overload that takes lambda expression as a parameter.
+        /// </summary>
+        internal static string UsePaginationLambdaOverloadCodeFixTitle {
+            get {
+                return ResourceManager.GetString("UsePaginationLambdaOverloadCodeFixTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Using overload which takes lambda expression will generate parameterized sql statement. Query plan for the statement can be reused for different values.
         /// </summary>
         internal static string UsePaginationLambdaOverloadDescription {
             get {
@@ -152,7 +161,7 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Use overload which takes lambda.
+        ///   Looks up a localized string similar to Use overload which takes lambda expression.
         /// </summary>
         internal static string UsePaginationLambdaOverloadTitle {
             get {

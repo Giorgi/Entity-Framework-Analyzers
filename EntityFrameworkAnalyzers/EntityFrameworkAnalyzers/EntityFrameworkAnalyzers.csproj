@@ -34,6 +34,7 @@
   <ItemGroup>
     <Compile Include="ConstructorCallAnalyzer.cs" />
     <Compile Include="ConstructorCallAnalyzerCodeFixProvider.cs" />
+    <Compile Include="Diagnostics.cs" />
     <Compile Include="RoslynUtils.cs" />
     <Compile Include="UseIncludeWithLambdaAnalyzerCodeFixProvider.cs" />
     <Compile Include="UseIncludeWithLambdaAnalyzer.cs" />

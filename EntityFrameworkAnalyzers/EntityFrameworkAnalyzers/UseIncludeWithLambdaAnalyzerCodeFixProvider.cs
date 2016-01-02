@@ -18,12 +18,11 @@ namespace EntityFrameworkAnalyzers
     [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(UseIncludeWithLambdaAnalyzerCodeFixProvider)), Shared]
     public class UseIncludeWithLambdaAnalyzerCodeFixProvider : CodeFixProvider
     {
-        internal static string title = (new LocalizableResourceString(nameof(Resources.ChangeWithLambda), Resources.ResourceManager, typeof(Resources))).ToString();
-        private const string SystemDataEntityNamespace = "System.Data.Entity";
+        internal static string title = new LocalizableResourceString(nameof(Resources.IncludeLambdaCodeFixTitle), Resources.ResourceManager, typeof(Resources)).ToString();
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
-            get { return ImmutableArray.Create(UseIncludeWithLambdaAnalyzer.DiagnosticId); }
+            get { return ImmutableArray.Create(Diagnostics.UseIncludeWithLambdaAnalyzerDiagnosticId); }
         }
 
         public sealed override FixAllProvider GetFixAllProvider()
@@ -38,16 +37,15 @@ namespace EntityFrameworkAnalyzers
             var diagnostic = context.Diagnostics.First();
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
-
-            var semanticModelAsync = await context.Document.GetSemanticModelAsync(context.CancellationToken);
+            var semanticModel = await context.Document.GetSemanticModelAsync(context.CancellationToken);
 
             // Find the type declaration identified by the diagnostic.
             var invocations = root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<InvocationExpressionSyntax>();
 
-            var declaration = invocations.First(syntax => (semanticModelAsync.GetSymbolInfo(syntax).Symbol)?.Name == "Include");
+            var declaration = invocations.First(syntax => semanticModel.GetSymbolInfo(syntax).Symbol?.Name == "Include");
 
-            // Register a code action that will invoke the fix.
-            context.RegisterCodeFix(CodeAction.Create(title, c => LiteralToLambdaAsync(context.Document, declaration, c), "EF1000CodeFixProvider"), diagnostic);
+            var equivalenceKey = $"{Diagnostics.UseIncludeWithLambdaAnalyzerDiagnosticId}CodeFixProvider";
+            context.RegisterCodeFix(CodeAction.Create(title, c => LiteralToLambdaAsync(context.Document, declaration, c), equivalenceKey), diagnostic);
         }
 
         private async Task<Document> LiteralToLambdaAsync(Document document, InvocationExpressionSyntax invocationExpr, CancellationToken cancellationToken)
@@ -116,7 +114,7 @@ namespace EntityFrameworkAnalyzers
             var root = await document.GetSyntaxRootAsync(cancellationToken) as CompilationUnitSyntax;
             var newRoot = root.ReplaceNode(stringLiteralExpression, lambdaExpression);
 
-            newRoot = newRoot.AddUsings(SystemDataEntityNamespace);
+            newRoot = newRoot.AddUsings(Namespaces.System.Data.Entity);
             
             var newDocument = document.WithSyntaxRoot(newRoot);
             return newDocument;
