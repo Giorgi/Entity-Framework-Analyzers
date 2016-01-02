@@ -62,7 +62,7 @@ namespace EntityFrameworkAnalyzers
 
             if (argumentList.Arguments[0].Expression.IsKind(SyntaxKind.StringLiteralExpression))
             {
-                var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetLocation());
+                var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetInvocationLocationWithArguments());
                 context.ReportDiagnostic(diagnostic);
             }
         }

@@ -65,7 +65,7 @@ namespace EntityFrameworkAnalyzers
 
                 if (lambdaBody.IsKind(SyntaxKind.ObjectCreationExpression))
                 {
-                    var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetLocation());
+                    var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetInvocationLocationWithArguments());
                     context.ReportDiagnostic(diagnostic); 
                 }
             }
