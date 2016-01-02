@@ -55,11 +55,8 @@ namespace EntityFrameworkAnalyzers
                 return;
             }
 
-            if (argumentList.Arguments[0].Expression.IsKind(SyntaxKind.NumericLiteralExpression))
-            {
-                var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetLocation(), memberSymbol.Name);
-                context.ReportDiagnostic(diagnostic);
-            }
+            var diagnostic = Diagnostic.Create(Rule, invocationExpr.GetLocation(), memberSymbol.Name);
+            context.ReportDiagnostic(diagnostic);
         }
     }
 }

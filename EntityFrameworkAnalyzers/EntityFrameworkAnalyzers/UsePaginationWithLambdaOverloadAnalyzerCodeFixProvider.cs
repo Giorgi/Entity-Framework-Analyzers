@@ -58,26 +58,40 @@ namespace EntityFrameworkAnalyzers
         {
             var documentEditor = await DocumentEditor.CreateAsync(document, cancellationToken);
 
-            var literalExpression = invocationExpr.ArgumentList.Arguments[0].Expression as LiteralExpressionSyntax;
-
             var variableName = await document.FindAvailabeVariableName(invocationExpr, cancellationToken);
 
-            var lambda = SyntaxFactory.ParseStatement($"Expression<Func<int>> {variableName} = () => {literalExpression.Token.ValueText};")
-                                      .WithAdditionalAnnotations(Formatter.Annotation).WithTrailingTrivia(SyntaxFactory.EndOfLine("\r"));
-            
-            var node = invocationExpr.Parent;
+            var expressionSyntax = invocationExpr.ArgumentList.Arguments[0].Expression;
 
-            while (!node.Parent.IsKind(SyntaxKind.Block))
+            var identifierNameSyntax = expressionSyntax as IdentifierNameSyntax;
+
+            if (identifierNameSyntax == null)
             {
-                node = node.Parent;
-            }
+                var literalExpression = expressionSyntax as LiteralExpressionSyntax;
 
-            documentEditor.InsertBefore(node, lambda);
-            documentEditor.ReplaceNode(literalExpression, SyntaxFactory.ParseExpression(variableName));
+                var skipExpression = literalExpression != null ? literalExpression.Token.ValueText : expressionSyntax.ToString();
+
+                var lambda = SyntaxFactory.ParseStatement($"var {variableName} = {skipExpression};")
+                                              .WithAdditionalAnnotations(Formatter.Annotation).WithTrailingTrivia(SyntaxFactory.EndOfLine("\r"));
+
+                var node = invocationExpr.Parent;
+
+                while (!node.Parent.IsKind(SyntaxKind.Block))
+                {
+                    node = node.Parent;
+                }
+
+                documentEditor.InsertBefore(node, lambda);
+
+                documentEditor.ReplaceNode(expressionSyntax, SyntaxFactory.ParseExpression($"() => {variableName}"));
+            }
+            else
+            {
+                documentEditor.ReplaceNode(expressionSyntax, SyntaxFactory.ParseExpression($"() => {identifierNameSyntax.Identifier.Text}"));
+            }
 
             var newRoot = documentEditor.GetChangedRoot() as CompilationUnitSyntax;
 
-            newRoot = newRoot.AddUsings("System.Data.Entity", "System.Linq.Expressions");
+            newRoot = newRoot.AddUsings("System.Data.Entity");
 
             return document.WithSyntaxRoot(newRoot);
         }
