@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/Giorgi/Entity-Framework-Analyzers</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Code Analyzers and Fixers for Common Entity Framework Issues built by .NET Compiler Platform ("Roslyn") </description>
-    <releaseNotes>Added analyzer for using strongly typed Include method.</releaseNotes>
+    <releaseNotes>Added analyzer for using Take and/or Skip methods which take lambda expression and constructor call on Queryable instance </releaseNotes>
     <copyright>Copyright (c) 2015 by Giorgi Dalakishvili</copyright>
     <tags>EntityFramework, Analyzers, Roslyn, Diagnostics</tags>
     <frameworkAssemblies>
