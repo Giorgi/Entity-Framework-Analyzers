@@ -143,7 +143,7 @@ namespace EntityFrameworkAnalyzers {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Using overload which takes lambda expression will generate parameterized sql statement. Query plan for the statement can be reused for different values.
+        ///   Looks up a localized string similar to Using overload which takes lambda expression will generate parameterized sql statement. Query execution plan for the statement can be reused for different values of parameters.
         /// </summary>
         internal static string UsePaginationLambdaOverloadDescription {
             get {

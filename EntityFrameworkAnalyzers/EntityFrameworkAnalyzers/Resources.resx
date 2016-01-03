@@ -145,7 +145,7 @@
     <value>Convert query to enumerable</value>
   </data>
   <data name="UsePaginationLambdaOverloadDescription" xml:space="preserve">
-    <value>Using overload which takes lambda expression will generate parameterized sql statement. Query plan for the statement can be reused for different values</value>
+    <value>Using overload which takes lambda expression will generate parameterized sql statement. Query execution plan for the statement can be reused for different values of parameters</value>
   </data>
   <data name="UsePaginationLambdaOverloadMessageFormat" xml:space="preserve">
     <value>Use overload which takes lambda to get parameterized query when calling {0}</value>

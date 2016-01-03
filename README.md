@@ -2,14 +2,21 @@
 
 Code Analyzers and Fixers for Common Entity Framework Issues built by [.NET Compiler Platform ("Roslyn")](https://github.com/dotnet/roslyn)
 
-Currently there is only one analyzer available: 
+## Available Analyzers ## 
 
-**Use Include with lambda**
-> Use Include method with lambda overload. This provides compile time validation and refactoring support
+**Use Include method with lambda expression overload**
+> Use Include method with lambda expression overload. This provides compile time validation and refactoring support
 
-![Use Include with lambda](Docs/IncludeWithLambda.PNG)
 
-###How to get it
+**Use Skip/Take with lambda expression**
+> Using Skip/Take overload which takes lambda expression will generate parameterized sql statement. Query execution plan for the statement can be reused for different values of parameters.
+
+
+**Calling class constructor on Queryable will throw an exception**
+> Calling class constructor on Queryable will throw an exception because it cannot be translated to sql statement
+
+
+##How to get it
 
 Entity Framework Analyzers is available on Nuget. To add the analyzers to your project run the following command in the Visual Studio Package Manager Console:
 
