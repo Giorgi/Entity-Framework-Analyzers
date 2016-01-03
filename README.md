@@ -2,7 +2,7 @@
 
 Code Analyzers and fixes for common Entity Framework issues built by [.NET Compiler Platform ("Roslyn")](https://github.com/dotnet/roslyn)
 
-## Available Analyzers ## 
+## Available Analyzers
 
 **Use Include method with lambda expression overload**
 > Use Include method with lambda expression overload. This provides compile time validation and refactoring support
