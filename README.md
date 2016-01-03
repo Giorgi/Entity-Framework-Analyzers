@@ -11,4 +11,9 @@ Currently there is only one analyzer available:
 
 ###How to get it
 
-Entity Framework Analyzers is available on Nuget: https://www.nuget.org/packages/EntityFrameworkAnalyzers/
+Entity Framework Analyzers is available on Nuget. To add the analyzers to your project run the following command in the Visual Studio Package Manager Console:
+
+``` 
+PM> Install-Package EntityFrameworkAnalyzers 
+```
+
