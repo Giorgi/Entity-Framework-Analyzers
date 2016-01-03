@@ -17,7 +17,7 @@ namespace EntityFrameworkAnalyzers
         internal static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.ConstructorCallQueryableTitle), Resources.ResourceManager, typeof(Resources));
         internal static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.ConstructorCallQueryableMessageFormat), Resources.ResourceManager, typeof(Resources));
         internal static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.ConstructorCallQueryableDescription), Resources.ResourceManager, typeof(Resources));
-        internal const string Category = "Usage";
+        internal const string Category = Categories.Usage;
 
         internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(Diagnostics.ConstructorCallAnalyzerDiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description);
 

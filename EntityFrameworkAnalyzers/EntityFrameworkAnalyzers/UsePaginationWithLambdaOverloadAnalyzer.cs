@@ -13,7 +13,7 @@ namespace EntityFrameworkAnalyzers
         internal static readonly LocalizableString Title = new LocalizableResourceString(nameof(Resources.UsePaginationLambdaOverloadTitle), Resources.ResourceManager, typeof(Resources));
         internal static readonly LocalizableString MessageFormat = new LocalizableResourceString(nameof(Resources.UsePaginationLambdaOverloadMessageFormat), Resources.ResourceManager, typeof(Resources));
         internal static readonly LocalizableString Description = new LocalizableResourceString(nameof(Resources.UsePaginationLambdaOverloadDescription), Resources.ResourceManager, typeof(Resources));
-        internal const string Category = "Usage";
+        internal const string Category = Categories.Performance;
 
         internal static DiagnosticDescriptor Rule = new DiagnosticDescriptor(Diagnostics.UsePaginationWithLambdaOverloadAnalyzerDiagnosticId, Title, MessageFormat, Category, DiagnosticSeverity.Warning, true, Description);
 
