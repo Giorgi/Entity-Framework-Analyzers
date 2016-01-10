@@ -1,6 +1,6 @@
 namespace EntityFrameworkAnalyzers
 {
-    public static class Diagnostics
+    internal static class Diagnostics
     {
         public const string UseIncludeWithLambdaAnalyzerDiagnosticId = "EF1000";
         public const string ConstructorCallAnalyzerDiagnosticId = "EF1001";

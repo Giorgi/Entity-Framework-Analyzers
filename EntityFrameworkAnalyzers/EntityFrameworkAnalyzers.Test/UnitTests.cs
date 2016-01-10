@@ -2,82 +2,72 @@
 using Microsoft.CodeAnalysis.CodeFixes;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System;
 using TestHelper;
 using EntityFrameworkAnalyzers;
+using EntityFrameworkAnalyzers.Test.Helpers;
+using static System.String;
 
 namespace EntityFrameworkAnalyzers.Test
 {
-	[TestClass]
-	public class UnitTest : CodeFixVerifier
-	{
-
-		//No diagnostics expected to show up
-		[TestMethod]
-		public void TestMethod1()
-		{
-			var test = @"";
-
-			VerifyCSharpDiagnostic(test);
-		}
-
-		//Diagnostic and CodeFix both triggered and checked for
-		[TestMethod]
-        [Ignore]
-		public void TestMethod2()
-		{
-			var test = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
+    [TestClass]
+    public class UnitTest : EntityFrameworkCodeFixVerifier
     {
-        class TypeName
-        {   
-        }
-    }";
-			var expected = new DiagnosticResult
-			{
-				Id = EntityFrameworkAnalyzers.Diagnostics.UseIncludeWithLambdaAnalyzerDiagnosticId,
-				Message = String.Format("Type name '{0}' contains lowercase letters", "TypeName"),
-				Severity = DiagnosticSeverity.Warning,
-				Locations =
-					new[] {
-							new DiagnosticResultLocation("Test0.cs", 11, 15)
-						}
-			};
+        private string sourceWithIssue = 
+@"namespace ConsoleApplication1
+{
+    class TypeName
+    {   
+        public void Test()
+        {
+            var model = new Model();
+            var query = model.Salesmen.Include(""Orders"");
+        }                
+    }
+}";
 
-			VerifyCSharpDiagnostic(test, expected);
+        private string sourceWithoutIssue = 
+@"using System.Data.Entity;
 
-			var fixtest = @"
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Diagnostics;
-
-    namespace ConsoleApplication1
+namespace ConsoleApplication1
+{
+    class TypeName
     {
-        class TYPENAME
-        {   
+        public void Test()
+        {
+            var model = new Model();
+            var query = model.Salesmen.Include(a => a.Orders);
         }
-    }";
-			VerifyCSharpFix(test, fixtest);
-		}
+    }
+}";
 
-		protected override CodeFixProvider GetCSharpCodeFixProvider()
-		{
-			return new UseIncludeWithLambdaAnalyzerCodeFixProvider();
-		}
+        [TestMethod]
+        public void IncludeMethodWithStringGeneratesWarning()
+        {
+            var expected = new DiagnosticResult
+            {
+                Id = Diagnostics.UseIncludeWithLambdaAnalyzerDiagnosticId,
+                Message = Format(Resources.IncludeLambdaAnalyzerMessageFormat, "Orders"),
+                Severity = DiagnosticSeverity.Warning,
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 44) }
+            };
 
-		protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
-		{
-			return new UseIncludeWithLambdaAnalyzer();
-		}
-	}
+            VerifyCSharpDiagnostic(sourceWithIssue, expected);
+        }
+
+        [TestMethod]
+        public void ChangesIncludeMethodWithStringToLambda()
+        {
+            VerifyCSharpFix(sourceWithIssue, sourceWithoutIssue);
+        }
+
+        protected override CodeFixProvider GetCSharpCodeFixProvider()
+        {
+            return new UseIncludeWithLambdaAnalyzerCodeFixProvider();
+        }
+
+        protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
+        {
+            return new UseIncludeWithLambdaAnalyzer();
+        }
+    }
 }

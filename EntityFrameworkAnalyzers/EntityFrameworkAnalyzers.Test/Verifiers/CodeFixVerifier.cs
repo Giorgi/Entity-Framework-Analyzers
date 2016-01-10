@@ -7,6 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
+using FluentAssertions;
 
 namespace TestHelper
 {
@@ -122,7 +123,8 @@ namespace TestHelper
 
             //after applying all of the code fixes, compare the resulting string to the inputted one
             var actual = GetStringFromDocument(document);
-            Assert.AreEqual(newSource, actual);
+
+            actual.Should().BeEquivalentTo(newSource);
         }
     }
 }
