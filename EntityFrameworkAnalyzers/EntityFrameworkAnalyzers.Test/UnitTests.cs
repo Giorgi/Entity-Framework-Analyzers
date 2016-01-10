@@ -48,7 +48,7 @@ namespace ConsoleApplication1
                 Id = Diagnostics.UseIncludeWithLambdaAnalyzerDiagnosticId,
                 Message = Format(Resources.IncludeLambdaAnalyzerMessageFormat, "Orders"),
                 Severity = DiagnosticSeverity.Warning,
-                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 44) }
+                Locations = new[] { new DiagnosticResultLocation("Test0.cs", 8, 40) }
             };
 
             VerifyCSharpDiagnostic(sourceWithIssue, expected);
