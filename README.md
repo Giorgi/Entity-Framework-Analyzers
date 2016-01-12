@@ -1,4 +1,5 @@
-# Entity Framework Analyzers [![NuGet Version](https://img.shields.io/nuget/v/EntityFrameworkAnalyzers.svg?style=flat)](https://www.nuget.org/packages/EntityFrameworkAnalyzers/)
+# Entity Framework Analyzers [![NuGet Version](https://img.shields.io/nuget/v/EntityFrameworkAnalyzers.svg?style=flat)](https://www.nuget.org/packages/EntityFrameworkAnalyzers/) [![Build status](https://ci.appveyor.com/api/projects/status/jh5ula20jdqsser3?svg=true)](https://ci.appveyor.com/project/Giorgi/entity-framework-analyzers)
+
 
 Code Analyzers and fixes for common Entity Framework issues built by [.NET Compiler Platform ("Roslyn")](https://github.com/dotnet/roslyn)
 
