@@ -1,0 +1,7 @@
+os: Visual Studio 2015
+
+init:
+- git config --global core.autocrlf false
+
+install:
+- nuget restore EntityFrameworkAnalyzers.sln
