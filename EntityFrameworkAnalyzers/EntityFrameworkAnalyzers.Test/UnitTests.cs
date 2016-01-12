@@ -59,6 +59,12 @@ namespace ConsoleApplication1
         {
             VerifyCSharpFix(sourceWithIssue, sourceWithoutIssue);
         }
+        
+        [TestMethod]
+        public void IncludeMethodWithLambdaDoesNotGenerateWarning()
+        {
+            VerifyCSharpDiagnostic(sourceWithoutIssue);
+        }
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
