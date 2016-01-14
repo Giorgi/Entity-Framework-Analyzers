@@ -41,7 +41,7 @@ namespace ConsoleApplication1
 }";
 
         [TestMethod]
-        public void IncludeMethodWithStringGeneratesWarning()
+        public void IncludeMethodWithStringGeneratesDiagnostic()
         {
             var expected = new DiagnosticResult
             {
@@ -61,7 +61,7 @@ namespace ConsoleApplication1
         }
         
         [TestMethod]
-        public void IncludeMethodWithLambdaDoesNotGenerateWarning()
+        public void IncludeMethodWithLambdaDoesNotGenerateDiagnostic()
         {
             VerifyCSharpDiagnostic(sourceWithoutIssue);
         }
