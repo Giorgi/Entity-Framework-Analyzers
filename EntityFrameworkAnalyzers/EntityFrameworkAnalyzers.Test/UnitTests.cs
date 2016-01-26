@@ -13,34 +13,6 @@ namespace EntityFrameworkAnalyzers.Test
     [TestClass]
     public class UnitTest : EntityFrameworkCodeFixVerifier
     {
-        private string sourceWithIssue =
-@"namespace ConsoleApplication1
-{
-    class TypeName
-    {   
-        public void Test()
-        {
-            var model = new Model();
-            var query = model.Salesmen.Include(""Orders"");
-        }                
-    }
-}";
-
-        private string sourceWithoutIssue =
-@"using System.Data.Entity;
-
-namespace ConsoleApplication1
-{
-    class TypeName
-    {
-        public void Test()
-        {
-            var model = new Model();
-            var query = model.Salesmen.Include(a => a.Orders);
-        }
-    }
-}";
-
         private string methodWithIssue = @"var model = new Model();
             var query = model.Salesmen.Include(""Orders"");";
 
