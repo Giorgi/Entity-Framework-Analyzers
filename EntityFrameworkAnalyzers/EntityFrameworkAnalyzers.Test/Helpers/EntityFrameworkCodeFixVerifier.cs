@@ -2,6 +2,10 @@ using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp;
+using Microsoft.CodeAnalysis.Formatting;
+using Microsoft.CodeAnalysis.MSBuild;
+
 using TestHelper;
 using Microsoft.CodeAnalysis.Text;
 
@@ -19,6 +23,15 @@ namespace EntityFrameworkAnalyzers.Test.Helpers
             return project.AddMetadataReference(IListSourceReference)
                           .AddMetadataReference(EntityFrameworkReference)
                           .AddDocument(newFileName, SourceText.From(Properties.Resources.Model)).Project;
+        }
+
+        protected string FormatSource(string source)
+        {
+            var syntaxNode = SyntaxFactory.ParseCompilationUnit(source);
+
+            var formatted = Formatter.Format(syntaxNode, MSBuildWorkspace.Create());
+
+            return formatted.ToString();
         }
     }
 }

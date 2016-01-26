@@ -9,6 +9,8 @@ using System.Linq;
 using System.Threading;
 using FluentAssertions;
 
+using Microsoft.CodeAnalysis.CSharp;
+
 namespace TestHelper
 {
     /// <summary>
