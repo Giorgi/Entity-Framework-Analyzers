@@ -1,4 +1,4 @@
-# Entity Framework Analyzers [![NuGet Version](https://buildstats.info/nuget/EntityFrameworkAnalyzers)](https://www.nuget.org/packages/EntityFrameworkAnalyzers/) [![Build status](https://ci.appveyor.com/api/projects/status/jh5ula20jdqsser3?svg=true)](https://ci.appveyor.com/project/Giorgi/entity-framework-analyzers)
+# Entity Framework Analyzers [![NuGet Version](https://buildstats.info/nuget/EntityFrameworkAnalyzers)](https://www.nuget.org/packages/EntityFrameworkAnalyzers/) [![Build status](https://ci.appveyor.com/api/projects/status/jh5ula20jdqsser3?svg=true)](https://ci.appveyor.com/project/Giorgi/entity-framework-analyzers) [![Apache license](http://img.shields.io/badge/license-Apache-brightgreen.svg)](https://github.com/Giorgi/Entity-Framework-Analyzers/blob/master/LICENSE.md)
 
 
 Code Analyzers and fixes for common Entity Framework issues built by [.NET Compiler Platform ("Roslyn")](https://github.com/dotnet/roslyn)
