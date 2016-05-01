@@ -1,0 +1,74 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Entity-framework-analyzers by Giorgi</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Entity-framework-analyzers</h1>
+        <p>Code Analyzers and Fixers for Common Entity Framework Issues.</p>
+
+        <p class="view"><a href="https://github.com/Giorgi/Entity-Framework-Analyzers">View the Project on GitHub <small>Giorgi/Entity-Framework-Analyzers</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/Giorgi/Entity-Framework-Analyzers/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/Giorgi/Entity-Framework-Analyzers/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/Giorgi/Entity-Framework-Analyzers">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>
+<a id="entity-framework-analyzers---" class="anchor" href="#entity-framework-analyzers---" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Entity Framework Analyzers <a href="https://www.nuget.org/packages/EntityFrameworkAnalyzers/"><img src="https://buildstats.info/nuget/EntityFrameworkAnalyzers" alt="NuGet Version"></a> <a href="https://ci.appveyor.com/project/Giorgi/entity-framework-analyzers"><img src="https://ci.appveyor.com/api/projects/status/jh5ula20jdqsser3?svg=true" alt="Build status"></a> <a href="https://github.com/Giorgi/Entity-Framework-Analyzers/blob/master/LICENSE.md"><img src="http://img.shields.io/badge/license-Apache-brightgreen.svg" alt="Apache license"></a>
+</h1>
+
+<p>Code Analyzers and fixes for common Entity Framework issues built by <a href="https://github.com/dotnet/roslyn">.NET Compiler Platform ("Roslyn")</a></p>
+
+<h2>
+<a id="available-analyzers" class="anchor" href="#available-analyzers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Available Analyzers</h2>
+
+<p><strong>Use Include method with lambda expression overload</strong></p>
+
+<blockquote>
+<p>Use Include method with lambda expression overload. This provides compile time validation and refactoring support</p>
+</blockquote>
+
+<p><strong>Use Skip/Take with lambda expression</strong></p>
+
+<blockquote>
+<p>Using Skip/Take overload which takes lambda expression will generate parameterized sql statement. Query execution plan for the statement can be reused for different values of parameters.</p>
+</blockquote>
+
+<p><strong>Calling class constructor on Queryable will throw an exception</strong></p>
+
+<blockquote>
+<p>Calling class constructor on Queryable will throw an exception because it cannot be translated to sql statement</p>
+</blockquote>
+
+<h2>
+<a id="how-to-get-it" class="anchor" href="#how-to-get-it" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>How to get it</h2>
+
+<p>Entity Framework Analyzers is available on Nuget. To add the analyzers to your project run the following command in the Visual Studio Package Manager Console:</p>
+
+<pre><code>PM&gt; Install-Package EntityFrameworkAnalyzers 
+</code></pre>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/Giorgi">Giorgi</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>
