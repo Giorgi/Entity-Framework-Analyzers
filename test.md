@@ -1,5 +1,0 @@
-## Title
-
-**Bold text**
-
-*Italic*
